@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>demo</title>
+    <!-- import CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="demo.css">
+    <!-- import Vue before Element -->
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <!-- import JavaScript -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <!-- import axios -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+
+<div id="header">
+    监 控 数 据
+</div>
+<div id="demo">
+    <el-form id="data"style="display: flex;">
+        <div class="top">
+        <div class="status">
+            <div class="fontshow">
+                Status
+            </div>
+            <div v-bind:class="{ 'el-icon-check good': currentStatus === 'Good', 'el-icon-close boose': currentStatus !== 'Good'}"></div>
+        </div>
+
+        <div class="usage">
+            <el-form-item label="内存使用量" class="show">
+                <el-progress type="circle" :percentage="memoryPercentUsage" ></el-progress>
+            </el-form-item>
+
+            <el-form-item label="硬盘空间使用量" class="show">
+                <el-progress type="circle" :percentage="storePercentUsage" ></el-progress>
+            </el-form-item>
+
+            <el-form-item label="临时文件硬盘空间使用量" class="show">
+                <el-progress type="circle" :percentage="tempPercentUsage" ></el-progress>
+            </el-form-item>
+        </div>
+        </div>
+
+        <div class="value">
+            <el-form-item label="生产者数量" class="show2">
+                <span>{{producerCount}}</span>
+            </el-form-item>
+
+            <el-form-item label="消费者数量" class="show2">
+                <span>{{consumerCount}}</span>
+            </el-form-item>
+
+
+            <el-form-item label="已接收消息数量" class="show2">
+                <span>{{enqueueCount}}</span>
+            </el-form-item>
+
+            <el-form-item label="已消费消息数量" class="show2">
+                <span>{{dequeueCount}}</span>
+            </el-form-item>
+
+            <el-form-item label="未消费消息数量" class="show2">
+                <span>{{queueSize}}</span>
+            </el-form-item>
+        </div>
+    </el-form>
+
+</div>
+<script >
+        new Vue({
+            el:'#demo',
+            data:{
+                memoryPercentUsage:0,
+                storePercentUsage:0,
+                tempPercentUsage:0,
+                currentStatus:"",
+                producerCount:"",
+                consumerCount:"",
+                dequeueCount:"",
+                enqueueCount:"",
+                queueSize:""
+            },
+            created: function(){
+                this.getMonitorBrokerData()
+                this.getBrokerCurrentStatus()
+                this.getMonitorDestinationData()
+            },
+            methods:{
+                getMonitorBrokerData: function () {
+                    axios.get('http://localhost:9090/getMonitorBrokerData').then(res => (
+                        this.memoryPercentUsage = res.data.memoryPercentUsage,
+                        this.storePercentUsage = res.data.storePercentUsage,
+                        this.tempPercentUsage = res.data.tempPercentUsage
+                    ))
+                },
+                getBrokerCurrentStatus:function () {
+                    axios.get('http://localhost:9090/getBrokerCurrentStatus').then(res => (
+                        this.currentStatus = res.data
+                    ))
+                },
+                getMonitorDestinationData:function () {
+                    axios.get('http://localhost:9090/getMonitorDestinationData').then(res => (
+                        this.producerCount = res.data.producerCount,
+                        this.consumerCount = res.data.consumerCount,
+                        this.dequeueCount = res.data.dequeueCount,
+                        this.enqueueCount = res.data.enqueueCount,
+                        this.queueSize = res.data.queueSize
+                    ))
+                }
+            }
+
+
+        })
+</script>
+</body>
+</html>

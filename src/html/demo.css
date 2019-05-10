@@ -1,0 +1,73 @@
+body {
+    margin: 0px;
+    background-color: darkgray;
+}
+
+#header {
+    height: 80px;
+    color: #409EFF;
+    font-size: 40px;
+    padding-top: 20px;
+    padding-left: 100px;
+    flex-direction: column;
+}
+
+
+#data {
+    display: flex;
+    flex-direction: column;
+}
+
+.top {
+    display: flex;
+}
+
+.status {
+    display: flex;
+    width: 30%;
+    background-color: #f5f5d5;
+    justify-content:center;
+    align-items:Center;
+}
+
+.usage{
+    display: flex;
+    width:70%;
+    background-color: #E6A23C;
+}
+
+.value {
+    display: flex;
+    padding-top: 100px;
+    background-color: #F56C6C;
+    padding-bottom: 100px;
+}
+
+.show {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin-left: 100px;
+}
+
+.show2 {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin-left: 100px;
+}
+
+.good {
+    font-size: 150px;
+    color: #67C23A;
+}
+
+.boose {
+    font-size: 150px;
+    color: crimson;
+}
+
+.fontshow {
+    font-size: 60px;
+    margin-right: 50px;
+}

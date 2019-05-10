@@ -1,0 +1,15 @@
+spring:
+  activemq:
+    broker-url: tcp://127.0.0.1:61616
+    pool:
+      max-connections: 100
+  jms:
+    pub-sub-domain: false
+    cache:
+      session-cache-size: 100
+    template:
+      receive-timeout: 100
+      default-destination: myspringqueue
+      delivery-mode: non_persistent
+server:
+  port: 9090
